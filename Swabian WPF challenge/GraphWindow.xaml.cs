@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using MathNet.Numerics;
+using OxyPlot;
 using Swabian_WPF_challenge.Models;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,52 @@ namespace Swabian_WPF_challenge
     /// <summary>
     /// Interaction logic for GraphWindow.xaml
     /// </summary>
-    public partial class GraphWindow : Window
+    public partial class GraphWindow : System.Windows.Window
     {
-        List<DataPoint> _points;
+        public IList<DataPoint> Points;
         PointsViewModel PointsViewModel;
         public GraphWindow(List<DataPoint> points)
         {
             InitializeComponent();
-            _points = points;
+            Points = points;
             PointsViewModel = new PointsViewModel(points);
+            this.DataContext = PointsViewModel;
+        }
+
+        private void LinearButton_Click(object sender, RoutedEventArgs e)
+        {
+            double[] xdata = Points.Select(d => d.X).ToArray();
+            double[] ydata = Points.Select(d => d.Y).ToArray(); ;
+
+            Tuple<double, double> p = Fit.Line(xdata, ydata);
+            double a = p.Item1;
+            double b = p.Item2;
+            LinearWindow linearWindow = new LinearWindow(a, b);
+            linearWindow.ShowDialog();
+        }
+
+        private void ExponentialButton_Click(object sender, RoutedEventArgs e)
+        {
+            double[] xdata = Points.Select(d => d.X).ToArray();
+            double[] ydata = Points.Select(d => d.Y).ToArray(); ;
+
+            Tuple<double, double> p = Fit.Exponential(xdata, ydata);
+            double a = p.Item1;
+            double b = p.Item2;
+            LinearWindow linearWindow = new LinearWindow();
+            linearWindow.ShowDialog();
+        }
+
+        private void PowerButton_Click(object sender, RoutedEventArgs e)
+        {
+            double[] xdata = Points.Select(d => d.X).ToArray();
+            double[] ydata = Points.Select(d => d.Y).ToArray(); ;
+
+            Tuple<double, double> p = Fit.Power(xdata, ydata);
+            double y = p.Item1;
+            double x = p.Item2;
+            LinearWindow linearWindow = new LinearWindow();
+            linearWindow.ShowDialog();
         }
     }
 }

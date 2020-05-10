@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using CsvHelper;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using OxyPlot;
 using System;
@@ -33,13 +34,30 @@ namespace Swabian_WPF_challenge
         {
             List<DataPoint> points = new List<DataPoint>();
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Json files (*.json)|*.json|All files (*.*)|*.*";
+            dialog.Filter = "Json files (*.json, *.csv)|*.json; *.csv|All files (*.*)|*.*";
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             if (dialog.ShowDialog() == true)
             {
                 string fileName = dialog.FileName;
-                string json = File.ReadAllText(fileName);
-                points = JsonConvert.DeserializeObject<List<DataPoint>>(json);
+                if(fileName.EndsWith(".csv"))
+                {
+                    string csv = File.ReadAllText(fileName);
+                    string[] csvPoints = csv.Split(
+                        new[] { Environment.NewLine },
+                        StringSplitOptions.None
+                    );
+                    foreach(string val in csvPoints)
+                    {
+                        string[] point = val.Split(';');
+                        int[] int_arr = Array.ConvertAll(point, Int32.Parse);
+                        points.Add(new DataPoint(int_arr[0], int_arr[1]));
+                    }
+                }
+                if(fileName.EndsWith(".json"))
+                {
+                    string json = File.ReadAllText(fileName);
+                    points = JsonConvert.DeserializeObject<List<DataPoint>>(json);
+                }
             }
             //TODO: Save loaded files into db
             if(points.Count != 0)

@@ -5,19 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:Swabian_WPF_challenge"
-        xmlns:models="clr-namespace:Swabian_WPF_challenge.Models"
         mc:Ignorable="d"
-        Title="GraphWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <!--<models:MainViewModel/>-->
-        <models:PointsViewModel/>
-    </Window.DataContext>
-    <Grid>
-        <!--<oxy:PlotView Model="{Binding MyModel}"/>-->
-        <oxy:Plot Title="{Binding Title}">
-            <oxy:Plot.Series>
-                <oxy:LineSeries ItemsSource="{Binding Points}"/>
-            </oxy:Plot.Series>
-        </oxy:Plot>
+        Title="GraphWindow" Height="480" Width="800">
+    <Grid Margin="10">
+        <Button x:Name="Linear" Content="Linear" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="LinearButton_Click"/>
+        <Button x:Name="Exponential" Content="Exponential" HorizontalAlignment="Center" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="ExponentialButton_Click"/>
+        <Button x:Name="PowerFunction" Content="Power function" HorizontalAlignment="Right" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="PowerButton_Click"/>
+        <Grid Height="400" VerticalAlignment="Top">
+            <oxy:Plot Title="{Binding Title}">
+                <oxy:Plot.Series>
+                    <oxy:LineSeries ItemsSource="{Binding Points}"
+                                Color="Transparent" 
+                                MarkerFill="IndianRed" 
+                                MarkerType="Circle"/>
+                </oxy:Plot.Series>
+            </oxy:Plot>
+        </Grid>
     </Grid>
 </Window>
