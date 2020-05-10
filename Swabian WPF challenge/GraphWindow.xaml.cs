@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using Swabian_WPF_challenge.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,12 @@ namespace Swabian_WPF_challenge
     public partial class GraphWindow : Window
     {
         List<DataPoint> _points;
+        PointsViewModel PointsViewModel;
         public GraphWindow(List<DataPoint> points)
         {
             InitializeComponent();
             _points = points;
+            PointsViewModel = new PointsViewModel(points);
         }
     }
 }
