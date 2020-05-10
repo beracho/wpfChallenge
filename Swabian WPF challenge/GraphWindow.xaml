@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="GraphWindow" Height="480" Width="800">
     <Grid Margin="10">
-        <Button x:Name="Linear" Content="Linear" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="LinearButton_Click"/>
-        <Button x:Name="Exponential" Content="Exponential" HorizontalAlignment="Center" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="ExponentialButton_Click"/>
-        <Button x:Name="PowerFunction" Content="Power function" HorizontalAlignment="Right" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="PowerButton_Click"/>
+        <Button x:Name="Lineal" Content="Lineal" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="FunctionButton_Click"/>
+        <Button x:Name="Exponential" Content="Exponential" HorizontalAlignment="Center" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="FunctionButton_Click"/>
+        <Button x:Name="PowerFunction" Content="Power function" HorizontalAlignment="Right" Margin="20,20,0,0" VerticalAlignment="Bottom" Width="200" Click="FunctionButton_Click"/>
         <Grid Height="400" VerticalAlignment="Top">
             <oxy:Plot Title="{Binding Title}">
                 <oxy:Plot.Series>

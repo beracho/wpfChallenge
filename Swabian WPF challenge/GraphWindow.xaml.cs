@@ -32,40 +32,41 @@ namespace Swabian_WPF_challenge
             this.DataContext = PointsViewModel;
         }
 
-        private void LinearButton_Click(object sender, RoutedEventArgs e)
+        private void FunctionButton_Click(object sender, RoutedEventArgs e)
         {
+            Button functionButton = sender as Button;
             double[] xdata = Points.Select(d => d.X).ToArray();
             double[] ydata = Points.Select(d => d.Y).ToArray(); ;
 
             Tuple<double, double> p = Fit.Line(xdata, ydata);
             double a = p.Item1;
             double b = p.Item2;
-            LinearWindow linearWindow = new LinearWindow(a, b);
-            linearWindow.ShowDialog();
+            FunctionWindow functionWindow = new FunctionWindow(a, b, functionButton.Content.ToString());
+            functionWindow.ShowDialog();
         }
 
-        private void ExponentialButton_Click(object sender, RoutedEventArgs e)
-        {
-            double[] xdata = Points.Select(d => d.X).ToArray();
-            double[] ydata = Points.Select(d => d.Y).ToArray(); ;
+        //private void ExponentialButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    double[] xdata = Points.Select(d => d.X).ToArray();
+        //    double[] ydata = Points.Select(d => d.Y).ToArray(); ;
 
-            Tuple<double, double> p = Fit.Exponential(xdata, ydata);
-            double a = p.Item1;
-            double b = p.Item2;
-            LinearWindow linearWindow = new LinearWindow();
-            linearWindow.ShowDialog();
-        }
+        //    Tuple<double, double> p = Fit.Exponential(xdata, ydata);
+        //    double a = p.Item1;
+        //    double b = p.Item2;
+        //    FunctionWindow linearWindow = new FunctionWindow();
+        //    linearWindow.ShowDialog();
+        //}
 
-        private void PowerButton_Click(object sender, RoutedEventArgs e)
-        {
-            double[] xdata = Points.Select(d => d.X).ToArray();
-            double[] ydata = Points.Select(d => d.Y).ToArray(); ;
+        //private void PowerButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    double[] xdata = Points.Select(d => d.X).ToArray();
+        //    double[] ydata = Points.Select(d => d.Y).ToArray(); ;
 
-            Tuple<double, double> p = Fit.Power(xdata, ydata);
-            double y = p.Item1;
-            double x = p.Item2;
-            LinearWindow linearWindow = new LinearWindow();
-            linearWindow.ShowDialog();
-        }
+        //    Tuple<double, double> p = Fit.Power(xdata, ydata);
+        //    double y = p.Item1;
+        //    double x = p.Item2;
+        //    FunctionWindow linearWindow = new FunctionWindow();
+        //    linearWindow.ShowDialog();
+        //}
     }
 }

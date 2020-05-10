@@ -87,7 +87,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LinearWindow.xaml">
+    <Page Include="FunctionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -102,8 +102,8 @@
     <Compile Include="GraphWindow.xaml.cs">
       <DependentUpon>GraphWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LinearWindow.xaml.cs">
-      <DependentUpon>LinearWindow.xaml</DependentUpon>
+    <Compile Include="FunctionWindow.xaml.cs">
+      <DependentUpon>FunctionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -111,8 +111,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ExponentialViewModel.cs" />
     <Compile Include="Models\LinearViewModel.cs" />
     <Compile Include="Models\PointsViewModel.cs" />
+    <Compile Include="Models\PowerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
