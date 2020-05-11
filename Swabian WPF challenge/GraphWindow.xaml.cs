@@ -39,7 +39,12 @@ namespace Swabian_WPF_challenge
             double[] ydata = Points.Select(d => d.Y).ToArray(); ;
 
             FunctionWindow functionWindow = new FunctionWindow(xdata, ydata, functionButton.Content.ToString());
-            functionWindow.ShowDialog();
+            if(functionWindow.successfullLoad)
+                functionWindow.ShowDialog();
+            else
+            {
+                MessageBox.Show(functionWindow.errorMessage, "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

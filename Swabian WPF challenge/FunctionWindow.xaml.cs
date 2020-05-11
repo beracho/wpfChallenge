@@ -24,6 +24,8 @@ namespace Swabian_WPF_challenge
         LinearViewModel LinearViewModel;
         ExponentialViewModel ExponentialViewModel;
         PowerViewModel PowerViewModel;
+        public bool successfullLoad;
+        public string errorMessage;
         public FunctionWindow()
         {
             InitializeComponent();
@@ -34,20 +36,44 @@ namespace Swabian_WPF_challenge
         public FunctionWindow(double[] xdata, double[] ydata, string functionType)
         {
             InitializeComponent();
-            if (functionType == "Lineal")
+            successfullLoad = true;
+            try
             {
-                LinearViewModel = new LinearViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
-                this.DataContext = LinearViewModel;
+
+                if (functionType == "Lineal")
+                {
+                    LinearViewModel = new LinearViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
+                    if (!LinearViewModel.displayed)
+                    {
+                        errorMessage = "It was not possible a lineal regression QR";
+                        successfullLoad = false;
+                    }
+                    this.DataContext = LinearViewModel;
+                }
+                if (functionType == "Exponential")
+                {
+                    ExponentialViewModel = new ExponentialViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
+                    if (!ExponentialViewModel.displayed)
+                    {
+                        errorMessage = "It was not possible an exponential regression QR";
+                        successfullLoad = false;
+                    }
+                    this.DataContext = ExponentialViewModel;
+                }
+                if (functionType == "Power function")
+                {
+                    PowerViewModel = new PowerViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
+                    if (!PowerViewModel.displayed)
+                    {
+                        successfullLoad = false;
+                    }
+                    this.DataContext = PowerViewModel;
+                }
             }
-            if (functionType == "Exponential")
+            catch (Exception)
             {
-                ExponentialViewModel = new ExponentialViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
-                this.DataContext = ExponentialViewModel;
-            }
-            if (functionType == "Power function")
-            {
-                PowerViewModel = new PowerViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
-                this.DataContext = PowerViewModel;
+                errorMessage = "Unexpected error";
+                successfullLoad = false;
             }
         }
 

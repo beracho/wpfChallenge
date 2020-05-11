@@ -18,30 +18,45 @@ namespace Swabian_WPF_challenge.Classes
         static List<PointFile> pointFile;
         public static List<PointFile> ReadDatabase()
         {
-            using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(databasePath))
+            try
             {
-                conn.CreateTable<PointFile>();
-                pointFile = conn.Table<PointFile>().ToList().OrderBy(c => c.Name).ToList();
+                using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(databasePath))
+                {
+                    conn.CreateTable<PointFile>();
+                    pointFile = conn.Table<PointFile>().ToList().OrderBy(c => c.Name).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
             return pointFile;
         }
 
         public static void insertIntoDatabase(string path, List<DataPoint> points)
         {
-            string[] pathSplit = path.Split('\\').ToArray();
-            PointFile newPointFile = new PointFile()
+            try
             {
-                Name = pathSplit[pathSplit.Length - 1],
-                Path = path,
-                Date = DateTime.Now,
-                Points = PointsToFile.reverseParse(points)
-            };
+                string[] pathSplit = path.Split('\\').ToArray();
+                PointFile newPointFile = new PointFile()
+                {
+                    Name = pathSplit[pathSplit.Length - 1],
+                    Path = path,
+                    Date = DateTime.Now,
+                    Points = PointsToFile.reverseParse(points)
+                };
 
-            using (SQLiteConnection connection = new SQLiteConnection(databasePath))
+                using (SQLiteConnection connection = new SQLiteConnection(databasePath))
+                {
+                    connection.CreateTable<PointFile>();
+                    connection.Insert(newPointFile);
+                };
+
+            }
+            catch (Exception)
             {
-                connection.CreateTable<PointFile>();
-                connection.Insert(newPointFile);
-            };
+                throw;
+            }
         }
     }
 

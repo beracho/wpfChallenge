@@ -44,13 +44,10 @@ namespace Swabian_WPF_challenge
             {
                 pointFilesListView.ItemsSource = pointFile;
             }
-            if (points.Count != 0)
+            if (points != null)
             {
                 GraphWindow graphWindow = new GraphWindow(points);
                 graphWindow.ShowDialog();
-            } else
-            {
-                MessageBox.Show("No points found on file", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -65,24 +62,48 @@ namespace Swabian_WPF_challenge
                 string fileName = dialog.FileName;
                 if (fileName.EndsWith(".csv"))
                 {
-                    string csv = File.ReadAllText(fileName);
-                    string[] csvPoints = csv.Split(
-                        new[] { Environment.NewLine },
-                        StringSplitOptions.None
-                    );
-                    foreach (string val in csvPoints)
+                    try
                     {
-                        string[] point = val.Split(';');
-                        int[] int_arr = Array.ConvertAll(point, Int32.Parse);
-                        points.Add(new DataPoint(int_arr[0], int_arr[1]));
+                        string csv = File.ReadAllText(fileName);
+                        string[] csvPoints = csv.Split(
+                            new[] { Environment.NewLine },
+                            StringSplitOptions.None
+                        );
+                        foreach (string val in csvPoints)
+                        {
+                            string[] point = val.Split(';');
+                            int[] int_arr = Array.ConvertAll(point, Int32.Parse);
+                            points.Add(new DataPoint(int_arr[0], int_arr[1]));
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Wrong format on CSV file, must be separated by ';'.", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return null;
                     }
                 }
                 if (fileName.EndsWith(".json"))
                 {
-                    string json = File.ReadAllText(fileName);
-                    points = JsonConvert.DeserializeObject<List<DataPoint>>(json);
+                    try
+                    {
+                        string json = File.ReadAllText(fileName);
+                        points = JsonConvert.DeserializeObject<List<DataPoint>>(json);
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show("Wrong format on JSON file, must have X and Y keys.", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return null;
+                    }
                 }
+            }
+            if (points.Count != 0)
+            {
                 DatabaseConnection.insertIntoDatabase(dialog.FileName, points);
+            }
+            else
+            {
+                return null;
             }
             return points;
         }
