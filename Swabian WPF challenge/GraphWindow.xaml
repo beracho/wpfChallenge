@@ -15,7 +15,6 @@
             <oxy:Plot Title="{Binding Title}">
                 <oxy:Plot.Series>
                     <oxy:LineSeries ItemsSource="{Binding Points}"
-                                Color="Transparent" 
                                 MarkerFill="IndianRed" 
                                 MarkerType="Circle"/>
                 </oxy:Plot.Series>

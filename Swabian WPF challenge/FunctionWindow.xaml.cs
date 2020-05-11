@@ -31,24 +31,43 @@ namespace Swabian_WPF_challenge
             ExponentialViewModel = new ExponentialViewModel();
             PowerViewModel = new PowerViewModel();
         }
-        public FunctionWindow(double a, double b, string functionType)
+        public FunctionWindow(double[] xdata, double[] ydata, string functionType)
         {
             InitializeComponent();
             if (functionType == "Lineal")
             {
-                LinearViewModel = new LinearViewModel(a, b);
+                LinearViewModel = new LinearViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
                 this.DataContext = LinearViewModel;
             }
             if (functionType == "Exponential")
             {
-                ExponentialViewModel = new ExponentialViewModel(a, b);
+                ExponentialViewModel = new ExponentialViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
                 this.DataContext = ExponentialViewModel;
             }
             if (functionType == "Power function")
             {
-                PowerViewModel = new PowerViewModel(a, b);
+                PowerViewModel = new PowerViewModel(xdata, ydata, minAndMax(xdata), minAndMax(ydata));
                 this.DataContext = PowerViewModel;
             }
+        }
+
+        public Tuple<double, double> minAndMax(double[] data)
+        {
+            double min = double.MaxValue;
+            double max = double.MinValue;
+            for(int i = 0; i < data.Length; i++)
+            {
+                if (data[i] > max)
+                    max = data[i];
+                if (data[i] < min)
+                    min = data[i];
+            }
+            if (max == min)
+            {
+                max += 2;
+                min -= 2;
+            }
+            return new Tuple<double, double>(min, max);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using OxyPlot;
+﻿using MathNet.Numerics;
+using MathNet.Numerics.LinearRegression;
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
@@ -17,14 +19,18 @@ namespace Swabian_WPF_challenge.Models
             this.FunctionModel.Series.Add(new FunctionSeries((x) => (2 * x) + 3, 0, 10, 0.1));
         }
 
-        public PowerViewModel(double a, double b)
+        public PowerViewModel(double[] xdata, double[] ydata, Tuple<double, double> xlimit, Tuple<double, double> ylimit)
         {
+            DirectRegressionMethod method = DirectRegressionMethod.QR;
+            Tuple<double, double> p = Fit.Power(xdata, ydata, method);
+            double a = p.Item1;
+            double b = p.Item2;
             this.FunctionModel = new PlotModel { Title = "Power regresion [ f(x) = " + a + " x ^ " + b + " ]" };
             Func<double, double> powerFunction = (x) => a * Math.Pow(x, b);
-            FunctionModel.Series.Add(new FunctionSeries(powerFunction, -10, 10, 0.0001));
+            FunctionModel.Series.Add(new FunctionSeries(powerFunction, xlimit.Item1, xlimit.Item2, 0.0001));
             // view limits
-            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Minimum = -10, Maximum = 10 });
-            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Minimum = -10, Maximum = 10 });
+            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Minimum = xlimit.Item1, Maximum = xlimit.Item2 });
+            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Minimum = ylimit.Item1, Maximum = ylimit.Item2 });
         }
 
         public PlotModel FunctionModel { get; private set; }

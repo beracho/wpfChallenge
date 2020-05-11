@@ -38,35 +38,8 @@ namespace Swabian_WPF_challenge
             double[] xdata = Points.Select(d => d.X).ToArray();
             double[] ydata = Points.Select(d => d.Y).ToArray(); ;
 
-            Tuple<double, double> p = Fit.Line(xdata, ydata);
-            double a = p.Item1;
-            double b = p.Item2;
-            FunctionWindow functionWindow = new FunctionWindow(a, b, functionButton.Content.ToString());
+            FunctionWindow functionWindow = new FunctionWindow(xdata, ydata, functionButton.Content.ToString());
             functionWindow.ShowDialog();
         }
-
-        //private void ExponentialButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    double[] xdata = Points.Select(d => d.X).ToArray();
-        //    double[] ydata = Points.Select(d => d.Y).ToArray(); ;
-
-        //    Tuple<double, double> p = Fit.Exponential(xdata, ydata);
-        //    double a = p.Item1;
-        //    double b = p.Item2;
-        //    FunctionWindow linearWindow = new FunctionWindow();
-        //    linearWindow.ShowDialog();
-        //}
-
-        //private void PowerButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    double[] xdata = Points.Select(d => d.X).ToArray();
-        //    double[] ydata = Points.Select(d => d.Y).ToArray(); ;
-
-        //    Tuple<double, double> p = Fit.Power(xdata, ydata);
-        //    double y = p.Item1;
-        //    double x = p.Item2;
-        //    FunctionWindow linearWindow = new FunctionWindow();
-        //    linearWindow.ShowDialog();
-        //}
     }
 }

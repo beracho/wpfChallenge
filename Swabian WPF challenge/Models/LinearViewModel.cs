@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using MathNet.Numerics;
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
@@ -17,14 +18,17 @@ namespace Swabian_WPF_challenge.Models
             this.FunctionModel.Series.Add(new FunctionSeries((x) => (2 * x) + 3, 0, 10, 0.1));
         }
 
-        public LinearViewModel(double a, double b)
+        public LinearViewModel(double[] xdata, double[] ydata, Tuple<double, double> xlimit, Tuple<double, double> ylimit)
         {
+            Tuple<double, double> p = Fit.Line(xdata, ydata);
+            double a = p.Item1;
+            double b = p.Item2;
             this.FunctionModel = new PlotModel { Title = "Linear regresion [ f(x) = " + b + " x + " + a + " ]" };
             Func<double, double> linearFunction = (x) => (b * x) + a;
-            FunctionModel.Series.Add(new FunctionSeries(linearFunction, -10, 10, 0.0001));
+            FunctionModel.Series.Add(new FunctionSeries(linearFunction, xlimit.Item1, xlimit.Item2, 0.0001));
             // view limits
-            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Minimum = -10, Maximum = 10 });
-            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Minimum = -10, Maximum = 10 });
+            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Minimum = xlimit.Item1, Maximum = xlimit.Item2 });
+            FunctionModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Minimum = ylimit.Item1, Maximum = ylimit.Item2 });
         }
 
         public PlotModel FunctionModel { get; private set; }
