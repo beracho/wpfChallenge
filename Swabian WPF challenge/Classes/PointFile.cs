@@ -14,13 +14,13 @@ namespace Swabian_WPF_challenge.Classes
         public string Name;
         public string Path;
         public DateTime Date;
-        public List<Tuple<double, double>> Points;
+        public string Points;
         public PointFile()
         {
             Name = "file.json";
             Path= "C:\\\\";
             Date = DateTime.Now;
-            Points = new List<Tuple<double, double>>();
+            Points = "2,3|1,5";
         }
     }
 }

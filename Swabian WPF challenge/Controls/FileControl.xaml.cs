@@ -1,4 +1,6 @@
-﻿using Swabian_WPF_challenge.Classes;
+﻿using OxyPlot;
+using Swabian_WPF_challenge.Classes;
+using Swabian_WPF_challenge.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +55,12 @@ namespace Swabian_WPF_challenge.Controls
                 control.nameTextBlock.Text = (e.NewValue as PointFile).Name;
                 control.dateTextBlock.Text = (e.NewValue as PointFile).Date.ToString();
                 control.pathTextBlock.Text = (e.NewValue as PointFile).Path;
-                control.pointsTextBlock.Text = (e.NewValue as PointFile).Points.Count.ToString();
+                control.pointsTextBlock.Text = "0";
+                if (!(e.NewValue as PointFile).Points.Equals(""))
+                {
+                    List<DataPoint> pointList = PointsToFile.parse((e.NewValue as PointFile).Points);
+                    control.pointsTextBlock.Text = pointList.Count.ToString();
+                }
             }
         }
         public FileControl()

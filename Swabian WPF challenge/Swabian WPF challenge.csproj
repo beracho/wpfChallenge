@@ -120,7 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\DatabaseConnection.cs" />
+    <Compile Include="Helpers\DatabaseConnection.cs" />
     <Compile Include="Classes\PointFile.cs" />
     <Compile Include="Controls\FileControl.xaml.cs">
       <DependentUpon>FileControl.xaml</DependentUpon>
@@ -131,6 +131,7 @@
     <Compile Include="FunctionWindow.xaml.cs">
       <DependentUpon>FunctionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PointsToFile.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

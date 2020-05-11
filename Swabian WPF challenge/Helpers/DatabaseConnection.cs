@@ -1,5 +1,6 @@
 ﻿using OxyPlot;
 using SQLite;
+using Swabian_WPF_challenge.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,19 +28,13 @@ namespace Swabian_WPF_challenge.Classes
 
         public static void insertIntoDatabase(string path, List<DataPoint> points)
         {
-            List<Tuple<double, double>> newPoints = new List<Tuple<double, double>>();
-            foreach(var value in points)
-            {
-                //Tuple<double, double> My_Tuple2 = new Tuple<double, double>(value.X, value.Y);
-                newPoints.Add(new Tuple<double, double>(value.X, value.Y));
-            }
             string[] pathSplit = path.Split('\\').ToArray();
             PointFile newPointFile = new PointFile()
             {
                 Name = pathSplit[pathSplit.Length - 1],
                 Path = path,
                 Date = DateTime.Now,
-                Points = newPoints
+                Points = PointsToFile.reverseParse(points)
             };
 
             using (SQLiteConnection connection = new SQLiteConnection(databasePath))
