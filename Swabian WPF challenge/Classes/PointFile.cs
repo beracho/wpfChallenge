@@ -11,16 +11,12 @@ namespace Swabian_WPF_challenge.Classes
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string Name;
-        public string Path;
-        public DateTime Date;
-        public string Points;
+        public string Name { get; set; }
+        public string Path { get; set; }
+        public DateTime Date { get; set; }
+        public string Points { get; set; }
         public PointFile()
         {
-            Name = "file.json";
-            Path= "C:\\\\";
-            Date = DateTime.Now;
-            Points = "2,3|1,5";
         }
     }
 }

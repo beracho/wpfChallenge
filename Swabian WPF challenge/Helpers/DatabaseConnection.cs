@@ -21,7 +21,7 @@ namespace Swabian_WPF_challenge.Classes
             using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(databasePath))
             {
                 conn.CreateTable<PointFile>();
-                pointFile = conn.Table<PointFile>().ToList();
+                pointFile = conn.Table<PointFile>().ToList().OrderBy(c => c.Name).ToList();
             }
             return pointFile;
         }

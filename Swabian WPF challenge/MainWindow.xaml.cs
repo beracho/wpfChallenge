@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using OxyPlot;
 using Swabian_WPF_challenge.Classes;
+using Swabian_WPF_challenge.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,6 +85,16 @@ namespace Swabian_WPF_challenge
                 DatabaseConnection.insertIntoDatabase(dialog.FileName, points);
             }
             return points;
+        }
+
+        private void pointFilesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PointFile selectedFile = (PointFile) pointFilesListView.SelectedItem;
+            if (selectedFile != null)
+            {
+                GraphWindow contactDetailsWindow = new GraphWindow(PointsToFile.parse(selectedFile.Points));
+                contactDetailsWindow.ShowDialog();
+            }
         }
     }
 }

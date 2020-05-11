@@ -53,13 +53,13 @@ namespace Swabian_WPF_challenge.Controls
             if (control != null)
             {
                 control.nameTextBlock.Text = (e.NewValue as PointFile).Name;
-                control.dateTextBlock.Text = (e.NewValue as PointFile).Date.ToString();
+                control.dateTextBlock.Text = "Fecha: " + (e.NewValue as PointFile).Date.ToString();
                 control.pathTextBlock.Text = (e.NewValue as PointFile).Path;
-                control.pointsTextBlock.Text = "0";
+                control.pointsTextBlock.Text = "Points: 0";
                 if (!(e.NewValue as PointFile).Points.Equals(""))
                 {
                     List<DataPoint> pointList = PointsToFile.parse((e.NewValue as PointFile).Points);
-                    control.pointsTextBlock.Text = pointList.Count.ToString();
+                    control.pointsTextBlock.Text = "Points: " + pointList.Count.ToString();
                 }
             }
         }

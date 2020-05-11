@@ -15,7 +15,7 @@ namespace Swabian_WPF_challenge.Helpers
             List<DataPoint> response = new List<DataPoint>();
             foreach(string value in aux)
             {
-                string[] point = value.Split(',').ToArray();
+                string[] point = value.Split(';').ToArray();
                 if (point.Length == 2)
                     response.Add(new DataPoint(double.Parse(point[0]), double.Parse(point[1])));
                 else
@@ -32,7 +32,7 @@ namespace Swabian_WPF_challenge.Helpers
             {
                 if (!newPoints.Equals(""))
                     newPoints += "|";
-                newPoints += value.X + "," + value.Y;
+                newPoints += value.X + ";" + value.Y;
             }
             return newPoints;
         }
